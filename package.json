@@ -2,7 +2,16 @@
   "name": "peer-connection-shim",
   "version": "0.1.0",
   "description": "Emulating peer connection in node & browser",
-  "keywords": [],
+  "keywords": [
+    "webrtc",
+    "p2p",
+    "peer",
+    "real-time",
+    "realtime",
+    "real",
+    "time",
+    "peer2peer"
+  ],
   "author": "Raynos <raynos2@gmail.com>",
   "repository": "git://github.com/Raynos/peer-connection-shim.git",
   "main": "index",
