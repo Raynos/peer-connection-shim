@@ -4,7 +4,7 @@ Emulating peer connection in node & browser
 
 ## Example
 
-```
+```js
 var PeerConnection = require("peer-connection-shim")
     , signalingChannel = createSignalingChannel()
     , pc
