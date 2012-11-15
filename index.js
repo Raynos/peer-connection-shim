@@ -68,7 +68,7 @@ proto.updateIce = NotImplemented("updateIce")
 /* A candidate is possible path through the internet
     to get to the remote peer of this connection
 */
-proto.addIceCandidate = NotImplemented("addIceCandidate")
+proto.addIceCandidate = noop
 /* Add a local stream to the connection. The connection will
     negotiate with the remote peer on how to send the stream
     to the remote.
@@ -176,3 +176,5 @@ function close() {
 
     this.readyState === "closed"
 }
+
+function noop() {}
