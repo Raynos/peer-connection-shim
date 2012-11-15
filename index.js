@@ -132,7 +132,7 @@ function createAnswer(success, error, constraints) {
 /* Merely store the description */
 function setLocalDescription(description, success, failure) {
     this.localDescription = description
-    success()
+    success && success()
 
     if (this.remoteDescription && this.readyState === "new") {
         open(this)
@@ -142,7 +142,7 @@ function setLocalDescription(description, success, failure) {
 /* Merely store the description */
 function setRemoteDescription(description, success, failure) {
     this.remoteDescription = description
-    success()
+    success && success()
 
     if (this.localDescription && this.readyState === "new") {
         open(this)

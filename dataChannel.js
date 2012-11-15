@@ -48,7 +48,9 @@ function DataChannel(stream, options) {
     }
 
     function message(data) {
-        emit(self, "message", data)
+        emit(self, "message", {
+            data: data
+        })
     }
 }
 
