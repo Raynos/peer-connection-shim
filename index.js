@@ -132,21 +132,23 @@ function createAnswer(success, error, constraints) {
 /* Merely store the description */
 function setLocalDescription(description, success, failure) {
     this.localDescription = description
-    success && success()
 
     if (this.remoteDescription && this.readyState === "new") {
         open(this)
     }
+
+    success && success()
 }
 
 /* Merely store the description */
 function setRemoteDescription(description, success, failure) {
     this.remoteDescription = description
-    success && success()
 
     if (this.localDescription && this.readyState === "new") {
         open(this)
     }
+
+    success && success()
 }
 
 /* Wait until the connection is open.

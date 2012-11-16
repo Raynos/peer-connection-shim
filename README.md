@@ -4,65 +4,102 @@ Emulating peer connection in node & browser
 
 ## Example
 
+Left side:
+
+  - create offer
+  - store locally
+  - pool local store for answer
+  - wait for incoming data channel
+  - echo message back to remote
+
 ```js
-var PeerConnection = require("peer-connection-shim")
-    , signalingChannel = createSignalingChannel()
-    , pc
-    , channel
+var PeerConnection = require("peer-connection")
+    , WriteStream = require("write-stream")
+    , store = require("local-store")("peer-connection-demo")
 
-// call start(true) to initiate
-function start(isInitiator) {
-    // uri is used to relay connections through
-    pc = PeerConnection({
-        uri: "http://discoverynetwork.co/relay"
-    })
+    , RTCPeerConnection = require("../../index")
 
-    if (isInitiator) {
-        pc.createOffer(localDescriptionCreated)
-    } else {
-        pc.createAnswer(localDescriptionCreated)
-    }
+store.set("left id", null)
+store.set("right id", null)
 
-    if (isInitiator) {
-        // create data channel and setup chat
-        channel = pc.createDataChannel("chat")
-        setupChat()
-    } else {
-        // setup chat on incoming data channel
-        pc.ondatachannel = function (evt) {
-            channel = evt.channel
-            setupChat()
+var pc = PeerConnection(RTCPeerConnection, {
+    uri: "http://localhost:8080"
+})
+
+pc.createOffer(function (err, offer) {
+    store.set("left id", offer)
+    // console.log("left id", offer)
+
+    var token = setInterval(function () {
+        var right = store.get("right id")
+
+        if (right) {
+            // console.log("right id", right)
+            pc.setRemote(right)
+
+            next()
+
+            clearInterval(token)
         }
-    }
-}
+    }, 1000)
+})
 
-function localDescriptionCreated(desc) {
-    pc.setLocalDescription(desc, function () {
-        signalingChannel.emit("sdp", pc.localDescription)
+function next() {
+    pc.on("connection", function (stream) {
+        stream.pipe(WriteStream(function (chunk) {
+            console.log("chunk", chunk)
+
+            stream.write(chunk)
+        }))
     })
 }
+```
 
-signalingChannel.on("sdp", function (sdp) {
-    if (!pc) {
-        start(false)
+Right side:
+
+ - poll local storage for offer
+ - create answer
+ - store answer
+ - open data channel
+ - write message to it
+ - wait for message to be echod back
+
+```js
+var PeerConnection = require("peer-connection")
+    , WriteStream = require("write-stream")
+    , store = require("local-store")("peer-connection-demo")
+
+    , RTCPeerConnection = require("../../index")
+
+var pc = PeerConnection(RTCPeerConnection, {
+    uri: "http://localhost:8080"
+})
+
+var token = setInterval(function () {
+    var left = store.get("left id")
+
+    if (left) {
+        // console.log("left id", left)
+        pc.createAnswer(left, function (err, answer) {
+            store.set("right id", answer)
+            // console.log("right id", answer)
+
+            next()
+        })
+
+        clearInterval(token)
     }
+}, 1000)
 
-    pc.setRemoteDescription(sdp)
-}
+function next() {
+    // console.log("creating stream")
+    var stream = pc.connect("name")
 
-function setupChat() {
-    channel.onopen = function () {
-        // e.g. enable send button
-        enableChat(channel)
-    }
+    stream.write("hello world!")
 
-    channel.onmessage = function (evt) {
-        showChatMessage(evt.data)
-    }
-}
-
-function sendChatMessage(msg) {
-    channel.send(msg)
+    stream.pipe(WriteStream(function (chunk) {
+        console.log("chunk", chunk)
+    }))
 }
 ```
 

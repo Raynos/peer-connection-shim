@@ -33,6 +33,12 @@ function DataChannel(stream, options) {
     stream.on("end", close)
     stream.on("data", message)
 
+    // events
+    self.onerror = null
+    self.onmessage = null
+    self.onopen = null
+    self.onclose = null
+
     function open(stream) {
         self.readyState = "open"
         emit(self, "open")

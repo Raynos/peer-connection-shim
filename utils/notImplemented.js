@@ -1,7 +1,9 @@
 module.exports = NotImplemented
 
 function NotImplemented(message) {
-    return function throw() {
+    return thrower
+
+    function thrower() {
         throw new Error(message + " is not implemented")
     }
 }

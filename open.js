@@ -1,14 +1,20 @@
 var shoe = require("shoe")
+    , header = require("header-stream")
 
     , emit = require("./utils/emit")
     , DataChannel = require("./dataChannel")
 
+module.exports = open
+
 function open(connection) {
     var configuration = connection._configuration
-        , stream = shoe(connection._configuration.uri + "/" +
-            connection.localDescription + "/" +
-            connection.remoteDescription)
+        , stream = header(shoe(connection._configuration.uri +
+            "/v1/echo"))
         , mdm = configuration.mdm
+
+    stream.setHeader("remote", connection.remoteDescription)
+    stream.setHeader("local", connection.localDescription)
+    stream.writeHead()
 
     mdm.on("connection", onConnection)
 
@@ -34,7 +40,7 @@ function open(connection) {
     }
 
     function onConnection(stream) {
-        emit(connection, "ondatachannel", {
+        emit(connection, "datachannel", {
             channel: new DataChannel(stream, {
                 remote: true
             })

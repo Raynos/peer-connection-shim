@@ -1,3 +1,5 @@
 node_modules
 *.log
 *.err
+example/simple/static/left.js
+example/simple/static/right.js
