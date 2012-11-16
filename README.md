@@ -17,7 +17,7 @@ var PeerConnection = require("peer-connection")
     , WriteStream = require("write-stream")
     , store = require("local-store")("peer-connection-demo")
 
-    , RTCPeerConnection = require("../../index")
+    , RTCPeerConnection = require("peer-connection-shim")
 
 store.set("left id", null)
 store.set("right id", null)
@@ -69,7 +69,7 @@ var PeerConnection = require("peer-connection")
     , WriteStream = require("write-stream")
     , store = require("local-store")("peer-connection-demo")
 
-    , RTCPeerConnection = require("../../index")
+    , RTCPeerConnection = require("peer-connection-shim")
 
 var pc = PeerConnection(RTCPeerConnection, {
     uri: "http://localhost:8080"
