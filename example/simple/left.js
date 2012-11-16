@@ -8,7 +8,7 @@ store.set("left id", null)
 store.set("right id", null)
 
 var pc = PeerConnection(RTCPeerConnection, {
-    uri: "http://localhost:8080"
+    uri: "http://discoverynetwork.co"
 })
 
 pc.createOffer(function (err, offer) {
