@@ -7,7 +7,7 @@ Emulating peer connection in node & browser
 Works on either server or client. You will need to use `ws://`
     uri on the server though.
 
-```
+```js
 var PeerConnection = require("peer-connection")
     , WriteStream = require("write-stream")
 
