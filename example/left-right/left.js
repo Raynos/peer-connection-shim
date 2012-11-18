@@ -8,18 +8,18 @@ store.set("left id", null)
 store.set("right id", null)
 
 var pc = PeerConnection(RTCPeerConnection, {
-    uri: "http://discoverynetwork.co"
+    uri: "http://localhost:8080"
 })
 
 pc.createOffer(function (err, offer) {
     store.set("left id", offer)
-    // console.log("left id", offer)
+    console.log("left id", offer)
 
     var token = setInterval(function () {
         var right = store.get("right id")
 
         if (right) {
-            // console.log("right id", right)
+            console.log("right id", right)
             pc.setRemote(right)
 
             next()

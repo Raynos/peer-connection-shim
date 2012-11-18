@@ -5,7 +5,7 @@ var PeerConnection = require("peer-connection")
     , RTCPeerConnection = require("../../index")
 
 var pc = PeerConnection(RTCPeerConnection, {
-    uri: "http://discoverynetwork.co"
+    uri: "http://localhost:8080"
 })
 
 var token = setInterval(function () {

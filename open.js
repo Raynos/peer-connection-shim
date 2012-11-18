@@ -1,5 +1,6 @@
 var shoe = require("shoe")
     , header = require("header-stream")
+    , Connection = require("signal-channel/connection")
 
     , emit = require("./utils/emit")
     , DataChannel = require("./dataChannel")
@@ -8,9 +9,10 @@ module.exports = open
 
 function open(connection) {
     var configuration = connection._configuration
-        , stream = header(shoe(connection._configuration.uri +
-            "/v1/echo"))
+        , stream = Connection(configuration.uri, "/v1/relay")
         , mdm = configuration.mdm
+
+    stream = header(stream)
 
     stream.setHeader("remote", connection.remoteDescription)
     stream.setHeader("local", connection.localDescription)

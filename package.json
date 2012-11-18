@@ -33,7 +33,8 @@
     "shoe": "0.0.7",
     "streams2": "~0.1.0",
     "mux-demux": "~3.3.4",
-    "data-channel": "~0.1.1"
+    "data-channel": "~0.1.1",
+    "signal-channel": "~0.1.0"
   },
   "devDependencies": {
     "tap": "~0.3.1",
@@ -42,7 +43,8 @@
     "browserify-server": "~2.0.4",
     "peer-connection": "~0.1.0",
     "write-stream": "~0.4.3",
-    "local-store": "~0.2.0"
+    "local-store": "~0.2.0",
+    "stream-router": "~0.1.0"
   },
   "licenses": [
     {
