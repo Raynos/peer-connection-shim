@@ -27,21 +27,18 @@
   },
   "dependencies": {
     "node-uuid": "~1.4.0",
-    "read-write-stream": "~0.1.4",
-    "lru-cache": "~2.1.0",
     "header-stream": "~0.1.4",
-    "shoe": "0.0.7",
-    "streams2": "~0.1.0",
-    "mux-demux": "~3.3.4",
     "data-channel": "~0.1.1",
-    "signal-channel": "~0.1.0"
+    "signal-channel": "~0.1.2",
+    "mux-demux": "~3.3.5",
+    "peer-connection": "~0.1.3"
   },
   "devDependencies": {
     "tap": "~0.3.1",
     "wr": "~1.2.1",
     "live-reload": "~0.2.0",
     "browserify-server": "~2.0.4",
-    "peer-connection": "~0.1.0",
+    "peer-connection": "~0.1.2",
     "write-stream": "~0.4.3",
     "local-store": "~0.2.0",
     "stream-router": "~0.1.0"

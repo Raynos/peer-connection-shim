@@ -1,5 +1,4 @@
-var shoe = require("shoe")
-    , header = require("header-stream")
+var header = require("header-stream")
     , Connection = require("signal-channel/connection")
 
     , emit = require("./utils/emit")

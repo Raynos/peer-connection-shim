@@ -19,6 +19,7 @@ function DataChannel(stream, options) {
 
     if (options.open) {
         self.readyState = "open"
+        emit(self, "open")
     }
 
     /* If options is an event emitter then self channel is
