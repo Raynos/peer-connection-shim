@@ -5,7 +5,7 @@ var PeerConnection = require("peer-connection")
     , RTCPeerConnection = require("../../index")
 
 var pc = PeerConnection(RTCPeerConnection, {
-    uri: "http://localhost:8080"
+    uri: "http://raynos.signal-channel-server.jit.su"
 })
 
 var token = setInterval(function () {
