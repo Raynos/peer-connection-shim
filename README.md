@@ -4,101 +4,45 @@ Emulating peer connection in node & browser
 
 ## Example
 
-Left side:
-
-  - create offer
-  - store locally
-  - pool local store for answer
-  - wait for incoming data channel
-  - echo message back to remote
-
-```js
-var PeerConnection = require("peer-connection")
-    , WriteStream = require("write-stream")
-    , store = require("local-store")("peer-connection-demo")
-
-    , RTCPeerConnection = require("peer-connection-shim")
-
-store.set("left id", null)
-store.set("right id", null)
-
-var pc = PeerConnection(RTCPeerConnection, {
-    uri: "http://localhost:8080"
-})
-
-pc.createOffer(function (err, offer) {
-    store.set("left id", offer)
-    // console.log("left id", offer)
-
-    var token = setInterval(function () {
-        var right = store.get("right id")
-
-        if (right) {
-            // console.log("right id", right)
-            pc.setRemote(right)
-
-            next()
-
-            clearInterval(token)
-        }
-    }, 1000)
-})
-
-function next() {
-    pc.on("connection", function (stream) {
-        stream.pipe(WriteStream(function (chunk) {
-            console.log("chunk", chunk)
-
-            stream.write(chunk)
-        }))
-    })
-}
 ```
-
-Right side:
-
- - poll local storage for offer
- - create answer
- - store answer
- - open data channel
- - write message to it
- - wait for message to be echod back
-
-```js
 var PeerConnection = require("peer-connection")
     , WriteStream = require("write-stream")
-    , store = require("local-store")("peer-connection-demo")
 
-    , RTCPeerConnection = require("peer-connection-shim")
+    , RTCPeerConnection = require("../../index")
 
-var pc = PeerConnection(RTCPeerConnection, {
-    uri: "http://localhost:8080"
+var pc1 = PeerConnection(RTCPeerConnection, {
+    uri: "http://raynos.signal-channel-server.jit.su"
 })
 
-var token = setInterval(function () {
-    var left = store.get("left id")
+var pc2 = PeerConnection(RTCPeerConnection, {
+    uri: "http://raynos.signal-channel-server.jit.su"
+})
 
-    if (left) {
-        // console.log("left id", left)
-        pc.createAnswer(left, function (err, answer) {
-            store.set("right id", answer)
-            // console.log("right id", answer)
+pc1.createOffer(function (err, offer) {
+    pc2.createAnswer(offer, function (err, answer) {
+        pc1.setRemote(answer)
 
-            next()
-        })
+        open()
+    })
+})
 
-        clearInterval(token)
-    }
-}, 1000)
+pc1.on("connection", function (stream) {
+    console.log("open channel", stream.meta)
 
-function next() {
-    // console.log("creating stream")
-    var stream = pc.connect("name")
+    stream.pipe(WriteStream(function (chunk) {
+        console.log("pc1", chunk)
+
+        stream.write(chunk)
+    }))
+})
+
+function open() {
+    var stream = pc2.connect("channel name")
 
     stream.write("hello world!")
 
     stream.pipe(WriteStream(function (chunk) {
-        console.log("chunk", chunk)
+        console.log("pc2", chunk)
     }))
 }
 ```
