@@ -10,16 +10,17 @@ Works on either server or client. You will need to use `ws://`
 ```js
 var PeerConnection = require("peer-connection")
     , WriteStream = require("write-stream")
+    , SignalChannel = require("signal-channel")
 
     , RTCPeerConnection = require("../../index")
 
-var pc1 = PeerConnection(RTCPeerConnection, {
-    uri: "http://raynos.signal-channel-server.jit.su"
-})
+var pc1 = PeerConnection(RTCPeerConnection({
+    stream: SignalChannel(null, "/v1/relay")
+}))
 
-var pc2 = PeerConnection(RTCPeerConnection, {
-    uri: "http://raynos.signal-channel-server.jit.su"
-})
+var pc2 = PeerConnection(RTCPeerConnection({
+    stream: SignalChannel(null, "/v1/relay")
+}))
 
 pc1.createOffer(function (err, offer) {
     pc2.createAnswer(offer, function (err, answer) {
@@ -48,6 +49,7 @@ function open() {
         console.log("pc2", chunk)
     }))
 }
+
 ```
 
 ## Installation

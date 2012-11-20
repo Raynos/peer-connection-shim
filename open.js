@@ -1,5 +1,4 @@
 var header = require("header-stream")
-    , Connection = require("signal-channel/connection")
 
     , emit = require("./utils/emit")
     , DataChannel = require("./dataChannel")
@@ -8,8 +7,7 @@ module.exports = open
 
 function open(connection) {
     var configuration = connection._configuration
-        , stream = Connection(configuration.uri
-            , "/v1/relay/" + configuration.namespace)
+        , stream = configuration.stream
         , mdm = configuration.mdm
 
     stream = header(stream)
@@ -26,7 +24,6 @@ function open(connection) {
 
     stream.on("end", onEnd)
 
-    configuration.mdm = mdm
     configuration.stream = stream
     configuration.signal.emit("stream", stream)
 
