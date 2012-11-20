@@ -3,9 +3,7 @@ var PeerConnection = require("peer-connection")
 
     , RTCPeerConnection = require("../../index")
 
-var client = PeerConnection(RTCPeerConnection, {
-    uri: "http://raynos.signal-channel-server.jit.su"
-})
+var client = PeerConnection(RTCPeerConnection)
 
 client.setLocal("400022")
 client.setRemote("400023")

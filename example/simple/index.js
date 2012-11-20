@@ -3,13 +3,9 @@ var PeerConnection = require("peer-connection")
 
     , RTCPeerConnection = require("../../index")
 
-var pc1 = PeerConnection(RTCPeerConnection, {
-    uri: "http://raynos.signal-channel-server.jit.su"
-})
+var pc1 = PeerConnection(RTCPeerConnection)
 
-var pc2 = PeerConnection(RTCPeerConnection, {
-    uri: "http://raynos.signal-channel-server.jit.su"
-})
+var pc2 = PeerConnection(RTCPeerConnection)
 
 pc1.createOffer(function (err, offer) {
     pc2.createAnswer(offer, function (err, answer) {

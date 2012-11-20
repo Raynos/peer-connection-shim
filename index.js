@@ -110,6 +110,7 @@ function RTCPeerConnection(configuration) {
     this.onidentityresult = null
 
     // internal
+    configuration = configuration || {}
     this._configuration = configuration
     configuration.signal = new EventEmitter()
     configuration.mdm = MuxDemux()
