@@ -3,13 +3,12 @@ var header = require("header-stream")
 
     , emit = require("./utils/emit")
     , DataChannel = require("./dataChannel")
-    , uri = "//signalchannel.co"
 
 module.exports = open
 
 function open(connection) {
     var configuration = connection._configuration
-        , stream = Connection(configuration.uri || uri
+        , stream = Connection(configuration.uri
             , "/v1/relay/" + configuration.namespace)
         , mdm = configuration.mdm
 
