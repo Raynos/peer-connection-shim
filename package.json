@@ -37,7 +37,8 @@
     "browserify-server": "~2.0.4",
     "peer-connection": "~0.2.0",
     "write-stream": "~0.4.3",
-    "signal-channel": "~0.2.3"
+    "signal-channel": "~0.2.3",
+    "local-store": "~0.2.0"
   },
   "licenses": [
     {

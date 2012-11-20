@@ -1,12 +1,13 @@
 var PeerConnection = require("peer-connection")
     , WriteStream = require("write-stream")
     , store = require("local-store")("peer-connection-demo")
+    , SignalChannel = require("signal-channel")
 
     , RTCPeerConnection = require("../../index")
 
-var pc = PeerConnection(RTCPeerConnection, {
-    uri: "http://raynos.signal-channel-server.jit.su"
-})
+var pc = PeerConnection(RTCPeerConnection({
+     stream: SignalChannel(null, "/v1/relay")
+}))
 
 var token = setInterval(function () {
     var left = store.get("left id")
