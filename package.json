@@ -1,6 +1,6 @@
 {
   "name": "peer-connection-shim",
-  "version": "0.3.1",
+  "version": "0.4.0",
   "description": "Emulating peer connection in node & browser",
   "keywords": [
     "webrtc",
