@@ -110,6 +110,11 @@ function RTCPeerConnection(configuration) {
     this.onidentityresult = null
 
     // internal
+    if (typeof configuration === "string") {
+        configuration = {
+            namespace: configuration
+        }
+    }
     configuration = configuration || {}
     this._configuration = configuration
     configuration.signal = new EventEmitter()
