@@ -1,6 +1,6 @@
 var uuid = require("node-uuid")
-    , EventEmitter = require("events").EventEmitter
     , MuxDemux = require("mux-demux")
+    , header = require("header-stream")
 
     , NotImplemented = require("./utils/notImplemented")
     , DataChannel = require("./dataChannel")
@@ -110,15 +110,12 @@ function RTCPeerConnection(configuration) {
     this.onidentityresult = null
 
     // internal
-    if (typeof configuration === "string") {
-        configuration = {
-            namespace: configuration
-        }
-    }
-    configuration = configuration || {}
-    this._configuration = configuration
-    configuration.signal = new EventEmitter()
-    configuration.mdm = MuxDemux()
+    configuration = this._configuration = configuration || {}
+    var stream = configuration.stream
+        , mdm = configuration.mdm = MuxDemux()
+
+    stream = configuration.stream = header(stream)
+    mdm.pipe(stream).pipe(mdm)
 }
 
 /* Return a unique identifier. A valid offer-answer pair consist
@@ -169,11 +166,8 @@ function createDataChannel(label, dataChannelDict) {
         , mdm = configuration.mdm
         , stream = configuration.stream
         , channel = mdm.createStream(label)
-        , options = stream ? {
-            open: true
-        } : configuration.signal
 
-    return new DataChannel(channel, options)
+    return new DataChannel(channel)
 }
 
 /* Cleanup open streams */

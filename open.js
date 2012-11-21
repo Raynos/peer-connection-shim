@@ -1,6 +1,4 @@
-var header = require("header-stream")
-
-    , emit = require("./utils/emit")
+var emit = require("./utils/emit")
     , DataChannel = require("./dataChannel")
 
 module.exports = open
@@ -10,22 +8,15 @@ function open(connection) {
         , stream = configuration.stream
         , mdm = configuration.mdm
 
-    stream = header(stream)
-
     stream.setHeader("remote", connection.remoteDescription)
     stream.setHeader("local", connection.localDescription)
     stream.writeHead()
 
     mdm.on("connection", onConnection)
 
-    mdm.pipe(stream).pipe(mdm)
-
     stream.on("connect", onConnect)
 
     stream.on("end", onEnd)
-
-    configuration.stream = stream
-    configuration.signal.emit("stream", stream)
 
     function onConnect() {
         connection.readyState = "active"

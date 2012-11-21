@@ -1,4 +1,6 @@
-var emit = require("./utils/emit")
+var WriteStream = require("write-stream")
+
+    , emit = require("./utils/emit")
 
     , proto = DataChannel.prototype
 
@@ -11,27 +13,17 @@ function DataChannel(stream, options) {
     var self = this
     self.label = stream.meta
     self.reliable = true
-    self.readyState = "connecting"
+    self.readyState = "open"
     self.bufferedAmount = 0
     self.binaryType = ""
 
     self._stream = stream
 
-    if (options.open) {
-        self.readyState = "open"
-        emit(self, "open")
-    }
-
-    /* If options is an event emitter then self channel is
-        opened locally and we wait for the underlying stream
-        to be opened before we declare the channel open
-    */
-    if (options && options.on) {
-        options.on("stream", open)
-    }
+    emit(self, "open")
 
     stream.on("error", error)
     stream.on("end", close)
+    stream.pipe(WriteStream(message))
     stream.on("data", message)
 
     // events

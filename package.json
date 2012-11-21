@@ -28,7 +28,9 @@
   "dependencies": {
     "node-uuid": "~1.4.0",
     "header-stream": "~0.1.4",
-    "mux-demux": "~3.3.5"
+    "mux-demux": "~3.3.6",
+    "peer-connection": "~0.2.0",
+    "signal-channel": "~0.2.4"
   },
   "devDependencies": {
     "tap": "~0.3.1",
