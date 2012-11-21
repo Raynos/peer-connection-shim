@@ -7,12 +7,17 @@ function open(connection) {
     var configuration = connection._configuration
         , stream = configuration.stream
         , mdm = configuration.mdm
+        , ps = configuration.ps
 
     stream.setHeader("remote", connection.remoteDescription)
     stream.setHeader("local", connection.localDescription)
     stream.writeHead()
 
     mdm.on("connection", onConnection)
+
+    ps.pipe(stream).pipe(mdm)
+
+    ps.resume()
 
     stream.on("connect", onConnect)
 

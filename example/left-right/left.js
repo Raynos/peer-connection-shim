@@ -9,7 +9,7 @@ store.set("left id", null)
 store.set("right id", null)
 
 var pc = PeerConnection(RTCPeerConnection({
-     stream: SignalChannel(null, "/v1/relay")
+     stream: SignalChannel(null, "/v1/relay/x")
 }))
 
 pc.createOffer(function (err, offer) {

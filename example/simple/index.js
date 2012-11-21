@@ -5,11 +5,11 @@ var PeerConnection = require("peer-connection")
     , RTCPeerConnection = require("../../index")
 
 var pc1 = PeerConnection(RTCPeerConnection({
-    stream: SignalChannel(null, "/v1/relay")
+    stream: SignalChannel(null, "/v1/relay/x")
 }))
 
 var pc2 = PeerConnection(RTCPeerConnection({
-    stream: SignalChannel(null, "/v1/relay")
+    stream: SignalChannel(null, "/v1/relay/x")
 }))
 
 pc1.createOffer(function (err, offer) {

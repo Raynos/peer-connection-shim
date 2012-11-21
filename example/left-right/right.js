@@ -6,7 +6,7 @@ var PeerConnection = require("peer-connection")
     , RTCPeerConnection = require("../../index")
 
 var pc = PeerConnection(RTCPeerConnection({
-     stream: SignalChannel(null, "/v1/relay")
+     stream: SignalChannel(null,"/v1/relay/x")
 }))
 
 var token = setInterval(function () {

@@ -1,6 +1,7 @@
 var uuid = require("node-uuid")
     , MuxDemux = require("mux-demux")
     , header = require("header-stream")
+    , PauseStream = require("pause-stream")
 
     , NotImplemented = require("./utils/notImplemented")
     , DataChannel = require("./dataChannel")
@@ -111,11 +112,11 @@ function RTCPeerConnection(configuration) {
 
     // internal
     configuration = this._configuration = configuration || {}
-    var stream = configuration.stream
-        , mdm = configuration.mdm = MuxDemux()
+    configuration.stream = header(configuration.stream)
+    var mdm = configuration.mdm = MuxDemux()
+        , ps = configuration.ps = PauseStream()
 
-    stream = configuration.stream = header(stream)
-    mdm.pipe(stream).pipe(mdm)
+    mdm.pipe(ps.pause())
 }
 
 /* Return a unique identifier. A valid offer-answer pair consist

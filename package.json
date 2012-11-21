@@ -29,17 +29,17 @@
     "node-uuid": "~1.4.0",
     "header-stream": "~0.1.4",
     "mux-demux": "~3.3.6",
-    "peer-connection": "~0.2.0",
-    "signal-channel": "~0.2.4"
+    "pause-stream": "0.0.6",
+    "write-stream": "~0.4.3"
   },
   "devDependencies": {
     "tap": "~0.3.1",
+    "signal-channel": "~0.2.3",
     "wr": "~1.2.1",
     "live-reload": "~0.2.0",
     "browserify-server": "~2.0.4",
     "peer-connection": "~0.2.0",
     "write-stream": "~0.4.3",
-    "signal-channel": "~0.2.3",
     "local-store": "~0.2.0"
   },
   "licenses": [
