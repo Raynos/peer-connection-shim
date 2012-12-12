@@ -1,15 +1,16 @@
 var PeerConnection = require("peer-connection")
     , WriteStream = require("write-stream")
     , relay = require("signal-channel/relay")
+    , MuxMemo = require("mux-memo")
 
     , RTCPeerConnection = require("../../index")
 
 var pc1 = PeerConnection(RTCPeerConnection({
-    stream: relay("simple example")
+    stream: relay(MuxMemo("localhost:8080/sock"), "simple example")
 }))
 
 var pc2 = PeerConnection(RTCPeerConnection({
-    stream: relay("simple example")
+    stream: relay(MuxMemo("localhost:8080/sock"), "simple example")
 }))
 
 pc1.createOffer(function (err, offer) {
@@ -18,6 +19,10 @@ pc1.createOffer(function (err, offer) {
 
         open()
     })
+})
+
+pc1.on("open", function () {
+    console.log("pc1 is open!")
 })
 
 pc1.on("connection", function (stream) {

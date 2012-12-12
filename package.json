@@ -40,7 +40,8 @@
     "browserify-server": "~2.0.4",
     "peer-connection": "~0.3.0",
     "write-stream": "~0.4.3",
-    "local-store": "~0.2.0"
+    "local-store": "~0.2.0",
+    "mux-memo": "~0.1.2"
   },
   "licenses": [
     {

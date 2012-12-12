@@ -13,13 +13,17 @@ function open(connection) {
     stream.setHeader("local", connection.localDescription)
     stream.writeHead()
 
+    stream.on("header", function (msg) {
+        if (msg && msg.open) {
+            onConnect()
+        }
+    })
+
     mdm.on("connection", onConnection)
 
     ps.pipe(stream).pipe(mdm)
 
     ps.resume()
-
-    stream.on("connect", onConnect)
 
     stream.on("end", onEnd)
 
