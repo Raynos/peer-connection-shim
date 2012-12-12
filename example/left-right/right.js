@@ -1,12 +1,12 @@
 var PeerConnection = require("peer-connection")
     , WriteStream = require("write-stream")
     , store = require("local-store")("peer-connection-demo")
-    , SignalChannel = require("signal-channel")
+    , relay = require("signal-channel/relay")
 
     , RTCPeerConnection = require("../../index")
 
 var pc = PeerConnection(RTCPeerConnection({
-     stream: SignalChannel(null,"/v1/relay/x")
+     stream: relay("left-right example")
 }))
 
 var token = setInterval(function () {
@@ -27,7 +27,7 @@ var token = setInterval(function () {
 
 function next() {
     // console.log("creating stream")
-    var stream = pc.connect("name")
+    var stream = pc.createStream("name")
 
     stream.write("hello world!")
 

@@ -1,15 +1,15 @@
 var PeerConnection = require("peer-connection")
     , WriteStream = require("write-stream")
-    , SignalChannel = require("signal-channel")
+    , relay = require("signal-channel/relay")
 
     , RTCPeerConnection = require("../../index")
 
 var pc1 = PeerConnection(RTCPeerConnection({
-    stream: SignalChannel(null, "/v1/relay/x")
+    stream: relay("simple example")
 }))
 
 var pc2 = PeerConnection(RTCPeerConnection({
-    stream: SignalChannel(null, "/v1/relay/x")
+    stream: relay("simple example")
 }))
 
 pc1.createOffer(function (err, offer) {
@@ -31,7 +31,7 @@ pc1.on("connection", function (stream) {
 })
 
 function open() {
-    var stream = pc2.connect("channel name")
+    var stream = pc2.createStream("channel name")
 
     stream.write("hello world!")
 

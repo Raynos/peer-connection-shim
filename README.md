@@ -4,15 +4,14 @@ Emulating peer connection in node & browser
 
 ## Example
 
-Works on either server or client. You will need to use `ws://`
-    uri on the server though.
+Works on either server or client.
 
 ```js
 var PeerConnection = require("peer-connection")
     , WriteStream = require("write-stream")
     , SignalChannel = require("signal-channel")
 
-    , RTCPeerConnection = require("../../index")
+    , RTCPeerConnection = require("peer-connection-shim")
 
 var pc1 = PeerConnection(RTCPeerConnection({
     stream: SignalChannel(null, "/v1/relay")
@@ -41,7 +40,7 @@ pc1.on("connection", function (stream) {
 })
 
 function open() {
-    var stream = pc2.connect("channel name")
+    var stream = pc2.createStream("channel name")
 
     stream.write("hello world!")
 

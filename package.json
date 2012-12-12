@@ -34,11 +34,11 @@
   },
   "devDependencies": {
     "tap": "~0.3.1",
-    "signal-channel": "~0.2.3",
+    "signal-channel": "~0.5.1",
     "wr": "~1.2.1",
     "live-reload": "~0.2.0",
     "browserify-server": "~2.0.4",
-    "peer-connection": "~0.2.0",
+    "peer-connection": "~0.3.0",
     "write-stream": "~0.4.3",
     "local-store": "~0.2.0"
   },

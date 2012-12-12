@@ -1,7 +1,7 @@
 var PeerConnection = require("peer-connection")
     , WriteStream = require("write-stream")
     , store = require("local-store")("peer-connection-demo")
-    , SignalChannel = require("signal-channel")
+    , relay = require("signal-channel/relay")
 
     , RTCPeerConnection = require("../../index")
 
@@ -9,7 +9,7 @@ store.set("left id", null)
 store.set("right id", null)
 
 var pc = PeerConnection(RTCPeerConnection({
-     stream: SignalChannel(null, "/v1/relay/x")
+     stream: relay("left-right example")
 }))
 
 pc.createOffer(function (err, offer) {

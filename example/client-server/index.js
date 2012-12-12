@@ -1,11 +1,11 @@
 var PeerConnection = require("peer-connection")
     , WriteStream = require("write-stream")
-    , SignalChannel = require("signal-channel")
+    , relay = require("signal-channel/relay")
 
     , RTCPeerConnection = require("../../index")
 
 var client = PeerConnection(RTCPeerConnection({
-    stream: SignalChannel(null, "/v1/relay/x")
+    stream: relay("client-server example")
 }))
 
 client.setLocal("400022")
